@@ -1,27 +1,29 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Runtime.Caching;
 
 namespace CacheHelper.Core
 {
     public class MemoryCacheProvider : ICacheProvider
     {
-        public T Get<T>(string key, Func<T> func) where T : class
+        public T Get<T>(string key, Expression<Func<T>> expression) where T : class
         {
             if (MemoryCache.Default.Contains(key))
                 return MemoryCache.Default.Get(key) as T;
             else
             {
-                return SetAndReturn(key, func);
+                return SetAndReturn(key, expression);
             }
         }
 
-        public void Evict(string key)
+        public void Bust(string key)
         {
             MemoryCache.Default.Remove(key);
         }
 
-        private static T SetAndReturn<T>(string key, Func<T> func) where T : class
+        private static T SetAndReturn<T>(string key, Expression<Func<T>> expression) where T : class
         {
+            var func = expression.Compile();
             var response = func();
             if (response == null) return null;
 

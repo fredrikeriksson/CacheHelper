@@ -17,6 +17,11 @@ namespace CacheHelper.Core
             return _provider.Get(key, func);
         }
 
+        public void Bust(string key)
+        {
+            _provider.Bust(key);
+        }
+
         public string BuildKey(string main, params string[] parameters)
         {
             return string.Join("_", new[] {main}.Union(parameters).ToArray());

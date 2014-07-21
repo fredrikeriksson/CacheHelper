@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace CacheHelper.Core
 {
     public interface ICacheProvider
     {
-        T Get<T>(string key, Func<T> func) where T : class;
-        void Evict(string key);
+        T Get<T>(string key, Expression<Func<T>> expression ) where T : class;
+        void Bust(string key);
     }
 }
