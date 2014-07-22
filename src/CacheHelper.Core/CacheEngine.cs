@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using CacheHelper.Core.Exceptions;
 
 namespace CacheHelper.Core
 {
@@ -44,7 +45,7 @@ namespace CacheHelper.Core
 
             if (method == null)
             {
-                return null;
+                throw new ExpressionBodyNotSupported();
             }
             if (method.Method.ReflectedType != null)
                 return BuildKey(string.Format("{0}.{1}", method.Method.ReflectedType.FullName, method.Method.Name), method.Arguments.Select(GetArgumentValue).ToArray());

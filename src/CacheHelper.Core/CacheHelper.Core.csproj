@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheEngine.cs" />
+    <Compile Include="Exceptions\ExpressionBodyNotSupported.cs" />
     <Compile Include="MemoryCacheProvider.cs" />
     <Compile Include="ICacheProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
