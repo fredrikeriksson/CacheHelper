@@ -1,11 +1,13 @@
 configuration: Release
-
-# restore NuGet packages before running MSBuild
-before_build:
-  - nuget restore
   
 build:
+  project: CacheHelper.sln
   verbosity: minimal
 tests:
   assemblies:
     CacheHelper.Core.Tests.dll
+branches:
+  # whitelist
+  only:
+    - master
+    - production
