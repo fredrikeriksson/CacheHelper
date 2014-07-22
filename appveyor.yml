@@ -6,3 +6,6 @@ before_build:
   
 build:
   verbosity: minimal
+tests:
+  assemblies:
+    CacheHelper.Core.Tests.dll
