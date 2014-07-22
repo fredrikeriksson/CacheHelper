@@ -3,9 +3,8 @@ configuration: Release
 build:
   project: CacheHelper.sln
   verbosity: minimal
+  publish_nuget: true
 branches:
   # whitelist
   only:
     - master
-artifacts:
-  - path: out\*.nupkg
