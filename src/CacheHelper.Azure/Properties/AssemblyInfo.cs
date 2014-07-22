@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CacheHelper.Core")]
-[assembly: AssemblyDescription("CacheHelper")]
+[assembly: AssemblyTitle("CacheHelper.Azure")]
+[assembly: AssemblyDescription("A CacheHelper Cacheprovider for Windows Azure")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fredrik Eriksson")]
-[assembly: AssemblyProduct("CacheHelper.Core")]
+[assembly: AssemblyProduct("CacheHelper.Azure")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("adde5249-6c2f-4304-b59c-819401d435c2")]
+[assembly: Guid("d3cc61ce-5a27-4847-a09f-e8aace1f6b32")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.3")]
-[assembly: AssemblyFileVersion("0.0.3")]
+[assembly: AssemblyVersion("0.0.1")]
+[assembly: AssemblyFileVersion("0.0.1")]

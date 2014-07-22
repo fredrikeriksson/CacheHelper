@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C390DA
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheHelper.Azure", "src\CacheHelper.Azure\CacheHelper.Azure.csproj", "{686BEFD0-0112-45AD-BCAD-DB60F27EE67D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{EAFAFEED-DC44-4305-8A26-270EB6742D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAFAFEED-DC44-4305-8A26-270EB6742D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAFAFEED-DC44-4305-8A26-270EB6742D37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{686BEFD0-0112-45AD-BCAD-DB60F27EE67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{686BEFD0-0112-45AD-BCAD-DB60F27EE67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{686BEFD0-0112-45AD-BCAD-DB60F27EE67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{686BEFD0-0112-45AD-BCAD-DB60F27EE67D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
