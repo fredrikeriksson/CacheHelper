@@ -7,3 +7,5 @@ branches:
   # whitelist
   only:
     - master
+artifacts:
+  - path: out\*.nupkg
