@@ -2,7 +2,7 @@ configuration: Release
   
 build:
   project: CacheHelper.sln
-  verbosity: minimal
+  verbosity: detailed
 tests:
   assemblies:
     CacheHelper.Core.Tests.dll
