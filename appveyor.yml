@@ -2,12 +2,8 @@ configuration: Release
   
 build:
   project: CacheHelper.sln
-  verbosity: detailed
-tests:
-  assemblies:
-    CacheHelper.Core.Tests.dll
+  verbosity: minimal
 branches:
   # whitelist
   only:
     - master
-    - production
