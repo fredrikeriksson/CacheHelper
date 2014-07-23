@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using CacheHelper.Core.Exceptions;
 
 namespace CacheHelper.Core
@@ -27,7 +28,12 @@ namespace CacheHelper.Core
         private static string GetArgumentValue(Expression element)
         {
             var lambda = Expression.Lambda(Expression.Convert(element, element.Type));
-            return lambda.Compile().DynamicInvoke().ToString();
+
+            var invoked = lambda.Compile().DynamicInvoke();
+            var properties = invoked.GetType().GetProperties();
+            if (!(invoked is string) && properties.Any())
+                return string.Join("_", properties.Select(prop => prop.GetValue(invoked, null)));
+            return invoked.ToString();
         }
 
         public void Bust(string key)
@@ -48,7 +54,9 @@ namespace CacheHelper.Core
                 throw new ExpressionBodyNotSupported();
             }
             if (method.Method.ReflectedType != null)
+            {
                 return BuildKey(string.Format("{0}.{1}", method.Method.ReflectedType.FullName, method.Method.Name), method.Arguments.Select(GetArgumentValue).ToArray());
+            }
             throw new Exception("ReflectedType");
         }
 

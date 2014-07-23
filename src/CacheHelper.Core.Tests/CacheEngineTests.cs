@@ -43,7 +43,21 @@ namespace CacheHelper.Core.Tests
         public void BuildKeyWithMultipleParameter()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.MultipleParameterMethod_test1_test2", cache.BuildKey(() => MultipleParameterMethod("test1", "test2")));
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.MultipleParameterMethod_test1_1_2", cache.BuildKey(() => MultipleParameterMethod("test1", 1, 2)));
+        }
+
+        [Fact]
+        public void BuildKeyWithClassParameter()
+        {
+            var cache = new CacheEngine(new MemoryCacheProvider());
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.ClassParameterMethod_1_Fredrik", cache.BuildKey(() => ClassParameterMethod(new Test { Id = 1, Name = "Fredrik" })));
+        }
+
+        [Fact]
+        public void BuildKeyWithTwoClassParameter()
+        {
+            var cache = new CacheEngine(new MemoryCacheProvider());
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.TwoClassParameterMethod_1_Fredrik1_2_Fredrik2", cache.BuildKey(() => TwoClassParameterMethod(new Test { Id = 1, Name = "Fredrik1" }, new Test { Id = 2, Name = "Fredrik2" })));
         }
 
         [Fact]
@@ -67,9 +81,19 @@ namespace CacheHelper.Core.Tests
             return null;
         }
 
-        private string MultipleParameterMethod(string value, string value2)
+        private string MultipleParameterMethod(string value, int value2, int? value3)
         {
-            return string.Format("{0} & {1}", value.ToUpper(), value2.ToUpper());
+            return string.Format("{0} & {1} & {2}", value.ToUpper(), value2, value3.GetValueOrDefault());
+        }
+
+        private string ClassParameterMethod(Test test)
+        {
+            return string.Format("{0} & {1}", test.Id, test.Name);
+        }
+
+        private string TwoClassParameterMethod(Test test, Test test2)
+        {
+            return string.Format("{0} & {1} || {2} & {3}", test.Id, test.Name, test2.Id, test2.Name);
         }
 
         private string OneEnumParameterMethod(EnumTest enumTest)
@@ -85,6 +109,12 @@ namespace CacheHelper.Core.Tests
         private enum EnumTest
         {
             Apa = 1
+        }
+
+        private class Test
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
         }
     }
 }
