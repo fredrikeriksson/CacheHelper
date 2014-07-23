@@ -15,7 +15,7 @@
     <copyright>Copyright 2014</copyright>
     <tags>CacheHelper AzureCaching</tags>
     <dependencies>
-      <dependency id="CacheHelper.Core" version="1.0.0-beta" />
+      <dependency id="CacheHelper.Core" version="1.0.0.0" />
     </dependencies>
   </metadata>
 </package>
