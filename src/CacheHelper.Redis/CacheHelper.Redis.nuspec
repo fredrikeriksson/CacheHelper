@@ -13,7 +13,7 @@
     <description>$description$</description>
     <releaseNotes>Nothing</releaseNotes>
     <copyright>Copyright 2014</copyright>
-    <tags>CacheHelper AzureCaching</tags>
+    <tags>CacheHelper StackExchange RedisClient</tags>
     <dependencies>
       <dependency id="CacheHelper.Core" version="1.0.0" />
     </dependencies>
