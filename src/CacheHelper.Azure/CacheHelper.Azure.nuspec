@@ -7,12 +7,15 @@
     <authors>$author$</authors>
     <owners>$author$</owners>
     <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <projectUrl>https://github.com/fredrikeriksson/CacheHelper</projectUrl>
     <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>Nothing</releaseNotes>
     <copyright>Copyright 2014</copyright>
-    <tags>CacheHelper AzureCache</tags>
+    <tags>CacheHelper AzureCaching</tags>
+    <dependencies>
+      <dependency id="CacheHelper.Core" version="1.0.0-beta" />
+    </dependencies>
   </metadata>
 </package>

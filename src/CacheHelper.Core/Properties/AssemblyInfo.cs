@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CacheHelper.Core")]
-[assembly: AssemblyDescription("CacheHelper")]
+[assembly: AssemblyDescription("A library that provides helper methods for caching")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fredrik Eriksson")]
 [assembly: AssemblyProduct("CacheHelper.Core")]
@@ -34,4 +34,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0-alpha")]
+[assembly: AssemblyInformationalVersion("1.0.0.0")]
