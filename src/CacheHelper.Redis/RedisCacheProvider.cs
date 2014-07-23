@@ -11,7 +11,7 @@ namespace CacheHelper.Redis
 
         public RedisCacheProvider(ConnectionMultiplexer connectionMultiplexer)
         {
-            if(_connectionMultiplexer == null)
+            if (connectionMultiplexer == null)
                 throw new ArgumentException("connectionMultiplexer");
             _connectionMultiplexer = connectionMultiplexer;
         }
