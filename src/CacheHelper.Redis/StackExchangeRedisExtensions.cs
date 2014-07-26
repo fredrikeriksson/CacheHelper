@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using StackExchange.Redis;
 
@@ -17,9 +18,9 @@ namespace CacheHelper.Redis
             return Deserialize<object>(cache.StringGet(key));
         }
 
-        public static void Set(this IDatabase cache, string key, object value)
+        public static void Set(this IDatabase cache, string key, object value, TimeSpan? expiry = null)
         {
-            cache.StringSet(key, Serialize(value));
+            cache.StringSet(key, Serialize(value), expiry);
         }
 
         static byte[] Serialize(object o)

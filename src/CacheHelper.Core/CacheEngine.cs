@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using CacheHelper.Core.Exceptions;
 
 namespace CacheHelper.Core
@@ -15,14 +14,14 @@ namespace CacheHelper.Core
             _provider = provider;
         }
 
-        public T Get<T>(string key, Expression<Func<T>> expression) where T : class
+        public T Get<T>(string key, Expression<Func<T>> expression, TimeSpan? expires = null)
         {
-            return _provider.Get(key, expression);
+            return _provider.Get(key, expression, expires);
         }
-        public T Get<T>(Expression<Func<T>> expression) where T : class
+        public T Get<T>(Expression<Func<T>> expression, TimeSpan? expires = null)
         {
             var key = BuildKey(expression);
-            return _provider.Get(key, expression);
+            return _provider.Get(key, expression, expires);
         }
 
         private static string GetArgumentValue(Expression element)

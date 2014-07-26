@@ -6,34 +6,27 @@ namespace CacheHelper.Core
 {
     public class MemoryCacheProvider : ICacheProvider
     {
-        public T Get<T>(string key, Expression<Func<T>> expression) where T : class
+        public T Get<T>(string key, Expression<Func<T>> expression, TimeSpan? expiry = null)
         {
             if (MemoryCache.Default.Contains(key))
-                return MemoryCache.Default.Get(key) as T;
-            else
             {
-                return SetAndReturn(key, expression);
+                return (T)MemoryCache.Default.Get(key);
             }
+            return SetAndReturn(key, expression, expiry);
+        }
+
+        private static T SetAndReturn<T>(string key, Expression<Func<T>> expression, TimeSpan? expiry = null)
+        {
+            var func = expression.Compile();
+            var response = func();
+            if (!ReferenceEquals(response, null))
+                MemoryCache.Default.Add(key, response, new CacheItemPolicy { SlidingExpiration = expiry ?? TimeSpan.FromMinutes(5) });
+            return response;
         }
 
         public void Bust(string key)
         {
             MemoryCache.Default.Remove(key);
-        }
-
-        private static T SetAndReturn<T>(string key, Expression<Func<T>> expression) where T : class
-        {
-            var func = expression.Compile();
-            var response = func();
-            if (response == null) return null;
-
-            MemoryCache.Default.Add(key, response, CreateCacheItemPolicy());
-            return response;
-        }
-
-        private static CacheItemPolicy CreateCacheItemPolicy(int seconds = 600)
-        {
-            return new CacheItemPolicy { SlidingExpiration = TimeSpan.FromSeconds(seconds) };
         }
     }
 }

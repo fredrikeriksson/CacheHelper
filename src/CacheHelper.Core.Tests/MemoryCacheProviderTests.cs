@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,6 +16,16 @@ namespace CacheHelper.Core.Tests
             Assert.Equal("This is a test!", cache.Get(() => NoParameterMethod()));
             Assert.Equal("This is a test!", MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
             Assert.Equal("This is a test!", cache.Get(() => NoParameterMethod()));
+        }
+
+        [Fact]
+        public void AddCacheWithNoParameterAndSetExpires()
+        {
+            var cache = new CacheEngine(new MemoryCacheProvider());
+            cache.Get(() => NoParameterMethod(), TimeSpan.FromSeconds(1));
+            Assert.NotNull(MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
+            Thread.Sleep(2000);
+            Assert.Null(MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
         }
 
         [Fact]
@@ -42,6 +53,20 @@ namespace CacheHelper.Core.Tests
             Assert.Equal("apa", cache.Get(() => OneEnumParameterMethod(EnumTest.Apa)));
             Assert.Equal("apa", MemoryCache.Default[cache.BuildKey(() => OneEnumParameterMethod(EnumTest.Apa))]);
             Assert.Equal("apa", cache.Get(() => OneEnumParameterMethod(EnumTest.Apa)));
+        }
+
+        [Fact]
+        public void KeyNotFoundInt()
+        {
+            var cache = new CacheEngine(new MemoryCacheProvider());
+            Assert.Equal(10, cache.Get(() => KeyNotFoundIntMethod()));
+            Assert.Equal(10, MemoryCache.Default[cache.BuildKey(() => KeyNotFoundIntMethod())]);
+            Assert.Equal(10, cache.Get(() => KeyNotFoundIntMethod()));
+        }
+
+        private int KeyNotFoundIntMethod()
+        {
+            return 10;
         }
 
         private string NoParameterMethod()
