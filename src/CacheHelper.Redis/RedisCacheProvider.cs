@@ -9,7 +9,7 @@ namespace CacheHelper.Redis
     public class RedisCacheProvider : ICacheProvider
     {
         private readonly ConnectionMultiplexer _connectionMultiplexer;
-        private IDatabase _database;
+        private readonly IDatabase _database;
 
         public RedisCacheProvider(ConnectionMultiplexer connectionMultiplexer)
         {
