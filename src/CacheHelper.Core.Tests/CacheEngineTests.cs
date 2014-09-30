@@ -61,6 +61,13 @@ namespace CacheHelper.Core.Tests
         }
 
         [Fact]
+        public void BuildKeyWithTwoParameter()
+        {
+            var cache = new CacheEngine(new MemoryCacheProvider());
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.TwoParameterMethod_1_Fredrik1_Apa", cache.BuildKey(() => TwoParameterMethod(new Test { Id = 1, Name = "Fredrik1" }, EnumTest.Apa)));
+        }
+
+        [Fact]
         public void BuildKeyWithReferenceToNonMethod()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
@@ -94,6 +101,11 @@ namespace CacheHelper.Core.Tests
         private string TwoClassParameterMethod(Test test, Test test2)
         {
             return string.Format("{0} & {1} || {2} & {3}", test.Id, test.Name, test2.Id, test2.Name);
+        }
+
+        private string TwoParameterMethod(Test test, EnumTest test2)
+        {
+            return string.Format("{0} & {1} || {2}", test.Id, test.Name, test2);
         }
 
         private string OneEnumParameterMethod(EnumTest enumTest)

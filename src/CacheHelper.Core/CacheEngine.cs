@@ -1,21 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using CacheHelper.Core.Exceptions;
 
 namespace CacheHelper.Core
 {
     public class CacheEngine
     {
+        private readonly Dictionary<Type, PropertyInfo[]> _reflectionStore;
+        private const string InternalReflectionStoreKey = "internal_reflection_store_{0}";
         private readonly ICacheProvider _provider;
 
         public CacheEngine(ICacheProvider provider)
         {
             _provider = provider;
+            _reflectionStore = new Dictionary<Type, PropertyInfo[]>();
         }
 
         public T Get<T>(string key, Expression<Func<T>> expression, TimeSpan? expires = null)
         {
+            if (key == InternalReflectionStoreKey)
+                throw new ArgumentException("The provided key is reserved and protected", "key");
             return _provider.Get(key, expression, expires);
         }
         public T Get<T>(Expression<Func<T>> expression, TimeSpan? expires = null)
@@ -24,15 +31,27 @@ namespace CacheHelper.Core
             return _provider.Get(key, expression, expires);
         }
 
-        private static string GetArgumentValue(Expression element)
+        private string GetArgumentValue(Expression element)
         {
             var lambda = Expression.Lambda(Expression.Convert(element, element.Type));
 
             var invoked = lambda.Compile().DynamicInvoke();
-            var properties = invoked.GetType().GetProperties();
+            var properties = GetCachedReflectedProperties(invoked);
             if (!(invoked is string) && properties.Any())
                 return string.Join("_", properties.Select(prop => prop.GetValue(invoked, null)));
             return invoked.ToString();
+        }
+
+        public PropertyInfo[] GetCachedReflectedProperties(object obj)
+        {
+            var type = obj.GetType();
+            if (!_reflectionStore.ContainsKey(type))
+            {
+                var properties = type.GetProperties();
+                _reflectionStore.Add(type, properties);
+                return properties;
+            }
+            return _reflectionStore[type];
         }
 
         public void Bust(string key)
