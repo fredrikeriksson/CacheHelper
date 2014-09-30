@@ -21,7 +21,7 @@ namespace CacheHelper.Core
 
         public T Get<T>(string key, Expression<Func<T>> expression, TimeSpan? expires = null)
         {
-            if (key == InternalReflectionStoreKey)
+            if (key.StartsWith("internal_reflection_store_"))
                 throw new ArgumentException("The provided key is reserved and protected", "key");
             return _provider.Get(key, expression, expires);
         }
