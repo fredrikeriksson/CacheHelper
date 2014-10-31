@@ -29,42 +29,42 @@ namespace CacheHelper.Core.Tests
         public void BuildKeyWithOneParameter()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.OneParameterMethod_carrot", cache.BuildKey(() => OneParameterMethod("carrot")));
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.OneParameterMethod_System.String:carrot", cache.BuildKey(() => OneParameterMethod("carrot")));
         }
 
         [Fact]
         public void BuildKeyWithOneEnumParameter()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.OneEnumParameterMethod_Apa", cache.BuildKey(() => OneEnumParameterMethod(EnumTest.Apa)));
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.OneEnumParameterMethod_CacheHelper.Core.Tests.CacheEngineTests+EnumTest:Apa", cache.BuildKey(() => OneEnumParameterMethod(EnumTest.Apa)));
         }
 
         [Fact]
         public void BuildKeyWithMultipleParameter()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.MultipleParameterMethod_test1_1_2", cache.BuildKey(() => MultipleParameterMethod("test1", 1, 2)));
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.MultipleParameterMethod_System.String:test1_System.Int32:1_System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]:2", cache.BuildKey(() => MultipleParameterMethod("test1", 1, 2)));
         }
 
         [Fact]
         public void BuildKeyWithClassParameter()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.ClassParameterMethod_1_Fredrik", cache.BuildKey(() => ClassParameterMethod(new Test { Id = 1, Name = "Fredrik" })));
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.ClassParameterMethod_System.Int32_1_System.String_Fredrik", cache.BuildKey(() => ClassParameterMethod(new Test { Id = 1, Name = "Fredrik" })));
         }
 
         [Fact]
         public void BuildKeyWithTwoClassParameter()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.TwoClassParameterMethod_1_Fredrik1_2_Fredrik2", cache.BuildKey(() => TwoClassParameterMethod(new Test { Id = 1, Name = "Fredrik1" }, new Test { Id = 2, Name = "Fredrik2" })));
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.TwoClassParameterMethod_System.Int32_1_System.String_Fredrik1_System.Int32_2_System.String_Fredrik2", cache.BuildKey(() => TwoClassParameterMethod(new Test { Id = 1, Name = "Fredrik1" }, new Test { Id = 2, Name = "Fredrik2" })));
         }
 
         [Fact]
         public void BuildKeyWithTwoParameter()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.TwoParameterMethod_1_Fredrik1_Apa", cache.BuildKey(() => TwoParameterMethod(new Test { Id = 1, Name = "Fredrik1" }, EnumTest.Apa)));
+            Assert.Equal("CacheHelper.Core.Tests.CacheEngineTests.TwoParameterMethod_System.Int32_1_System.String_Fredrik1_CacheHelper.Core.Tests.CacheEngineTests+EnumTest:Apa", cache.BuildKey(() => TwoParameterMethod(new Test { Id = 1, Name = "Fredrik1" }, EnumTest.Apa)));
         }
 
         [Fact]
@@ -72,6 +72,15 @@ namespace CacheHelper.Core.Tests
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
             Assert.Throws<ExpressionBodyNotSupported>(() => cache.BuildKey(() => "asd"));
+        }
+
+        [Fact]
+        public void BuildKeyForMethodsWithOverride()
+        {
+            var cache = new CacheEngine(new MemoryCacheProvider());
+            var f = cache.BuildKey(() => OvverrideTest1(1));
+            var s = cache.BuildKey(() => OvverrideTest1("1"));
+            Assert.NotEqual(f, s);
         }
 
         private string NoParameterMethod()
@@ -116,6 +125,16 @@ namespace CacheHelper.Core.Tests
                     return "apa";
             }
             return null;
+        }
+
+        private string OvverrideTest1(string test)
+        {
+            return "F";
+        }
+
+        private string OvverrideTest1(int test)
+        {
+            return "S";
         }
 
         private enum EnumTest

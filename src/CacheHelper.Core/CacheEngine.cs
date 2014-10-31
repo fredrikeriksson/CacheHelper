@@ -35,8 +35,8 @@ namespace CacheHelper.Core
             var invoked = lambda.Compile().DynamicInvoke();
             var properties = GetCachedReflectedProperties(invoked);
             if (!(invoked is string) && properties.Any())
-                return string.Join("_", properties.Select(prop => prop.GetValue(invoked, null)));
-            return invoked.ToString();
+                return string.Join("_", properties.Select(prop => prop.PropertyType.FullName + "_" + prop.GetValue(invoked, null)));
+            return string.Format("{0}:{1}", element.Type.FullName, invoked);
         }
 
         public PropertyInfo[] GetCachedReflectedProperties(object obj)
