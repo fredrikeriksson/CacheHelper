@@ -19,12 +19,26 @@ namespace CacheHelper.Core.Tests
         }
 
         [Fact]
+        public void AddCacheWithExpiry()
+        {
+            var cache = new CacheEngine(new MemoryCacheProvider());
+            Assert.Equal("This is a test!", cache.Get(() => NoParameterMethod(), TimeSpan.FromMilliseconds(200)));
+            Thread.Sleep(100);
+            Assert.NotEqual(null, MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
+            Assert.Equal("This is a test!", cache.Get(() => NoParameterMethod(), TimeSpan.FromMilliseconds(200)));
+            Thread.Sleep(100);
+            Assert.Equal(null, MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
+            Assert.Equal("This is a test!", cache.Get(() => NoParameterMethod(), TimeSpan.FromMilliseconds(200)));
+            Assert.NotEqual(null, MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
+        }
+
+        [Fact]
         public void AddCacheWithNoParameterAndSetExpires()
         {
             var cache = new CacheEngine(new MemoryCacheProvider());
-            cache.Get(() => NoParameterMethod(), TimeSpan.FromSeconds(1));
+            cache.Get(() => NoParameterMethod(), TimeSpan.FromMilliseconds(200));
             Assert.NotNull(MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
-            Thread.Sleep(2000);
+            Thread.Sleep(250);
             Assert.Null(MemoryCache.Default[cache.BuildKey(() => NoParameterMethod())]);
         }
 
